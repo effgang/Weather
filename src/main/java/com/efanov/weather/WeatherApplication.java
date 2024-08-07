@@ -11,9 +11,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class WeatherApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(WeatherApplication.class, args);
-
-        System.out.println(context.getBean(BotProperties.class));
+        SpringApplication.run(WeatherApplication.class, args);
     }
 
 }
