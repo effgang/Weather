@@ -35,6 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
+
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
@@ -42,14 +43,17 @@ public class TelegramBot extends TelegramLongPollingBot {
             if (message.equalsIgnoreCase(START)) {
                 sendMessage(chatId, GREETENGS);
                 userStates.put(chatId, AWAITING_CITY);
+            } else if (message.equalsIgnoreCase(EXIT) || message.equalsIgnoreCase(EXIT_RU)) {
+                sendMessage(chatId, TO_CONTINUE_PLEASE_WRITE_START);
+                userStates.remove(chatId);
             } else if (userStates.containsKey(chatId) && userStates.get(chatId).equals(AWAITING_CITY)) {
                 startCommandReceived(chatId, message);
-                userStates.remove(chatId);
             } else {
                 sendMessage(chatId, UNKNOWN_COMMAND);
             }
         }
     }
+
 
     private void sendMessage(Long chatId, String text) {
         SendMessage sendMessage = new SendMessage();
@@ -62,12 +66,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+
     private void startCommandReceived(Long chatId, String cityFromText) {
         var weather = weatherService.getWeather(cityFromText);
         if (weather == null) {
             sendMessage(chatId, WRONG_LOCATION_MESSAGE);
-        }else {
+        } else {
             sendMessage(chatId, weather.getMessage());
         }
     }
+
 }

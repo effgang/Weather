@@ -1,3 +1,5 @@
 bot:
-  name: EverydayWeatherBot
-  token: 7341019999:AAGyhvRsi95uHUxGtNtRRvvaN_RKXki3ujg
+  name: ${BOT_NAME}
+  token: ${BOT_TOKEN}
+
+weather.key: ${WEATHER_KEY}

@@ -8,6 +8,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WeatherDTO {
+    public Location location;
+    public Current current;
+
+    public String getMessage() {
+        return "Weather in " + location.name + ", " + location.country + ":" + '\n' +
+                current.toString();
+    }
+
     public static class Condition {
 
         public String text;
@@ -40,13 +48,5 @@ public class WeatherDTO {
         public String region;
         public String country;
 
-    }
-
-    public Location location;
-    public Current current;
-
-    public String getMessage() {
-        return "Weather in " + location.name + ", " + location.country + ":" + '\n' +
-                current.toString();
     }
 }
